@@ -133,6 +133,16 @@ abstract class FileResource
     }
     
     /**
+     * Returns the filepath to the resource or null if the property is not defined
+     *
+     * @return null|string
+     */
+    public function getFilePath()
+    {
+        return $this->filepath;
+    }
+    
+    /**
      * Validates the file matches the checksum
      *
      * @return null|boolean Returns null if the file can not be found or any
@@ -163,16 +173,6 @@ abstract class FileResource
             return true;
         }
         return false;
-    }
-    
-    /**
-     * Returns the filepath to the resource or null if the property is not defined
-     *
-     * @return null|string
-     */
-    public function getFilePath()
-    {
-        return $this->filepath;
     }
 
     /**
@@ -218,6 +218,27 @@ abstract class FileResource
             return null;
         }
         return $return;
+    }
+    
+    /**
+     * Returns null or the value to use with a script node integrity attribute
+     *
+     * @return null|string
+     */
+    public function getIntegrityAttribute()
+    {
+        if (is_null($this->checksum)) {
+            return null;
+        }
+        list($algo, $checksum) = explode(':', $this->checksum);
+        if (! in_array($algo, $this->validIntegrityAlgo)) {
+            return null;
+        }
+        if (ctype_xdigit($checksum)) {
+            $checksum = hex2bin($checksum);
+            $checksum = base64_encode($checksum);
+        }
+        return $algo . '-' . $checksum;
     }
 
     /**
