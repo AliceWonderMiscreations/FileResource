@@ -3,6 +3,8 @@ FileResource Abstract Class
 An abstract class for resources embedded in a web page (images, scripts,
 whatever)
 
+__WARNING__: Developer Release, may have serious flaws.
+
 This package is intended to provide a standard means by which web applications
 can treat resources embedded in the web page as objects.
 
@@ -72,7 +74,7 @@ For many files, additional properties are needed to adequately embed the
 resource within a web page (such as `alt` tag and possibly `caption` for an
 image)
 
-This abstract class is intended to define *most* is commonly needed for
+This abstract class is intended to define *most* properties commonly needed for
 embedding a resource in a web page and *everything* that is needed for a PHP
 wrapper to correctly serve the file.
 
@@ -106,7 +108,7 @@ The following methods are defined by the abstract class:
   Returns the `$checksum` property.
 
 * `public function getCrossOrigin()`  
-  Returns the `$crossorigib` property.
+  Returns the `$crossorigin` property.
 
 * `public function getFilePath()`  
   Returns the `$filepath` property.
@@ -134,7 +136,7 @@ The following methods are defined by the abstract class:
 
 
 
-AWonder\FileResource\FileWrapper
+AWonderPHP\FileResource\FileWrapper
 ================================
 
 This is a class that extends my `\AWonderPHP\FileWrapper\FileWrapper` class.
@@ -150,7 +152,7 @@ independent of the file on the filesystem.
 
 
 
-AWonder\FileResource\ResourceServer
+AWonderPHP\FileResource\ResourceServer
 ===================================
 
 This is an abstract class that provides a public method for serving a file
