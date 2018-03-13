@@ -67,6 +67,7 @@ abstract class ResourceServer
         $wrapper = new \AWonderPHP\FileResource\FileWrapper($filepath, $mime, $ts, $origin, $this->maxage);
         return $wrapper->sendfile();
     }
+// end of class
 }
 
 ?>

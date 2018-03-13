@@ -39,6 +39,7 @@ abstract class FileResource
      *
      * The checksum is either hex or base64 encoded. Example:
      * sha256:708c26ff77c1fa15ac9409a5cbe946fe50ce203a73c9b300960f2adb79e48c04
+     * For performance in generating integrity tag I recommend this property be base64 encoded
      *
      * @var null|string
      */
@@ -66,7 +67,7 @@ abstract class FileResource
 
     /**
      * Modification date of file - may not necessarily match the modification date of the actual
-     * file as seen by the filesystem. ISO 8601 in 'Y-m-d\TH:i:sO' - aka date('c')
+     * file as seen by the filesystem. I recommend ISO 8601 in 'Y-m-d\TH:i:sO' - aka date('c')
      *
      * @var null|string
      */
@@ -75,28 +76,28 @@ abstract class FileResource
     // subset from parse_url
 
     /**
-     * The protocol scheme
+     * The protocol scheme. Should be null, http, or https
      *
      * @var null|string
      */
     protected $urlscheme = null;
 
     /**
-     * The host name
+     * The host name. Internationalized names should be in punycode
      *
      * @var null|string
      */
     protected $urlhost = null;
 
     /**
-     * The url path
+     * The url path. Should start with a forward slash /
      *
      * @var null|string
      */
     protected $urlpath = null;
 
     /**
-     * The query string
+     * The query string. The part of a URL that comes after the ?
      *
      * @var null|string
      */
@@ -110,6 +111,64 @@ abstract class FileResource
     public function getMimeType()
     {
         return $this->mime;
+    }
+    
+    /**
+     * Tests whether or not a specified $prefix is valid. Classes that extend may wish to
+     * throw an exception on failure.
+     *
+     * @param null|string $prefix The prefix to test
+     *
+     * @return bool True on valid, False on invalid
+     */
+    protected function validatePrefix($prefix)
+    {
+        if (is_null($prefix)) {
+            return true;
+        }
+        if (strlen($prefix) > 0) {
+            if ($prefix[0] !== "/") {
+                return false;
+            }
+        }
+        $testurl = 'http://example.org' . $prefix . '/path/file.html';
+        if (filter_var($testurl, FILTER_VALIDATE_URL) === false) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Converts a string to a UNIX timestamp returning null on failure
+     * or if string is a relative time string (e.g. +1 week)
+     *
+     * @param null|string $dateString The date string to be converted
+     *
+     * @return null|int The UNIX seconds from epoch
+     */
+    protected function stringToTimestamp($dateString)
+    {
+        $now = time();
+        $then = $now - 31557600;
+        if (! is_string($dateString)) {
+            return null;
+        }
+        if (! $return = strtotime($dateString, $now)) {
+            return null;
+        }
+        if ($return > $now) {
+            return null;
+        }
+        if ($return < 0) {
+            return null;
+        }
+        if (! $test = strtotime($dateString, $then)) {
+            return null;
+        }
+        if ($return === $test) {
+            return $return;
+        }
+        return null;
     }
 
     /**
@@ -153,6 +212,12 @@ abstract class FileResource
      */
     public function validateFile()
     {
+        /* Unit Test:
+         *  Test with known good and bad hex (should return true, false respectively)
+         *  Test with known good and bad base64 (should return true, false respectively)
+         *  Test with file not present (should return null)
+         *  Test with algo not in hash_algos() (should return null)
+         */
         if ((is_null($this->filepath)) || (is_null($this->checksum))) {
             return null;
         }
@@ -185,6 +250,18 @@ abstract class FileResource
      */
     public function getSrcAttribute($prefix = null)
     {
+        /* Unit Test:
+         *  Test with various different $prefix
+         *  Test with scheme w/o hostname
+         *  Test with hostname w/o scheme
+         *  Test with scheme that is not http or https
+         *  Test with http w/ null checksum
+         *  Test with http w/ checksum algo not in $validIntegrityAlgo
+         *  Test with urlquery that includes &
+         */
+        if (! $this->validatePrefix($prefix)) {
+            return null;
+        }
         if (is_null($prefix)) {
             $prefix = '';
         }
@@ -212,7 +289,7 @@ abstract class FileResource
             $return = $return . $prefix . $this->urlpath;
         }
         if (! is_null($this->urlquery)) {
-            $return .= '?' . $this->urlquery;
+            $return = $return '?' . $this->urlquery;
         }
         if (strlen($return) === 0) {
             return null;
@@ -227,6 +304,12 @@ abstract class FileResource
      */
     public function getIntegrityAttribute()
     {
+        /* Unit Test:
+         *  Test with all algorithms in $validIntegrityAlgo
+         *   ensuring hex is properly translated to base64
+         *  Test with algorithm NOT in $validIntegrityAlgo
+         *
+         */
         if (is_null($this->checksum)) {
             return null;
         }
@@ -248,14 +331,14 @@ abstract class FileResource
      */
     public function getTimestamp()
     {
-        if (is_null($this->lastmod)) {
-            return null;
-        }
-        if ($ts = strtotime($this->lastmod)) {
-            return $ts;
-        }
-        return null;
+        /* Unit Test:
+         *  Test with ISO 8601 strings
+         *  Test with non-ISO 8601 strings
+         *  Test with relative strings (should return null)
+         */
+        return $this->stringToTimestamp($this->lastmod);
     }
+// end of abstract class
 }
 
 ?>

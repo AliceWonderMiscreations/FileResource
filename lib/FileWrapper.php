@@ -75,6 +75,7 @@ class FileWrapper extends \AWonderPHP\FileWrapper\FileWrapper
         }
         $this->fixEtag();
     }
+// end of class
 }
 
 ?>
