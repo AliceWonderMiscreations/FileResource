@@ -13,3 +13,5 @@ cat psr2.phpcs.xml > phpcs.xml
 rm -rf vendor
 
 composer install
+
+vendor/bin/phpunit --testdox-text UnitTestResults.txt

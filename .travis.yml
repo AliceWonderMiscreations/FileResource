@@ -8,4 +8,4 @@ env:
 install:
   - composer require phpunit/phpunit:${PHPUNIT_VERSION}
 
-script: vendor/bin/phpunit
+script: vendor/bin/phpunit --testdox

@@ -1,0 +1,36 @@
+GenericFileResource
+ [x] Null mime property returns as null
+ [x] Upper case mime property returns as lower case
+ [x] Mime property with whitespace returns as trimmed
+ [x] Null crossorigin property returns as null
+ [x] Anonymous crossorigin property returns as anonymous
+ [x] Use credentials crossorigin property returns as use credentials
+ [x] Crossorigin property not case sensitive
+ [x] Crossorigin property with whitespace returns as trimmed
+ [x] Invalid crossorigin property throws exception
+ [x] File validates from hex checksum property
+ [x] File fails validation with incorrect hex checksum property
+ [x] File validates from base 64 checksum property
+ [x] File fails validation with incorrect base 64 checksum property
+ [x] File validation returns null when file not present
+ [x] File validation returns null when digest algorithm not valid
+ [x] Generates src attribute from all properties
+ [x] Generates locale src attribute when url scheme attribute null
+ [x] Generates locale src attribute when url host attribute null
+ [x] Will not generate src attribute for http with null checksum property
+ [x] Will generate src attribute for http with sha 256 checksum property
+ [x] Will not generate src attribute for http with checksum property that can not be used for integrity attribute
+ [x] Will not generate src attribute for urlscheme not null or https or http
+ [x] Generates src attribute for local hosted
+ [x] Generates src attribute for local hosted with valid path prefix
+ [x] Will not generate src attribute for local hosted with invalid path prefix that has no leading forward slash
+ [x] Will not generate src attribute for local hosted with invalid path prefix that contains space character
+ [x] Validates file with ripemd 160 hex checksum
+ [x] Generate valid integrity attribute from checksum property using sha 256
+ [x] Generate valid integrity attribute from checksum property using sha 384
+ [x] Generate valid integrity attribute from checksum property using sha 512
+ [x] Does not generate integrity attribute from checksum property using ripemd 160
+ [x] Generate unix timestamp from iso 8601 string
+ [x] Generate unix timestamp from non iso 8601 absolute date string
+ [x] Does note generate unix timestamp from relative date string
+

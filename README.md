@@ -172,5 +172,10 @@ The `__construct` function takes a single argument, an array of `key => value`
 pairs where the `key` corresponds to the FileResource property you wish to set.
 
 
+Unit Testing
+============
+
+Unit Testing is performed using [PHPUnit](https://phpunit.de/) version 7.
+
 -----------------------------------
 __EOF__

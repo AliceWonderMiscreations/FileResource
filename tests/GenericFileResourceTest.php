@@ -27,6 +27,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Unit testing for the FileResource abstract class.
  */
+// @codingStandardsIgnoreLine
 final class GenericFileResourceTest extends TestCase
 {
     /**
@@ -34,7 +35,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testNullMimeReturnsNull(): void
+    public function testNullMimePropertyReturnsAsNull(): void
     {
         $arr = array();
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
@@ -47,7 +48,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testUpperCaseMimeReturnsLower(): void
+    public function testUpperCaseMimePropertyReturnsAsLowerCase(): void
     {
         $arr = array();
         $arr['mime'] = 'TEXT/PLAIN';
@@ -62,7 +63,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testMimeWithWhitespaceIsTrimmed(): void
+    public function testMimePropertyWithWhitespaceReturnsAsTrimmed(): void
     {
         $arr = array();
         $arr['mime'] = ' TEXT/PLAIN ';
@@ -79,7 +80,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testNullCrossOriginReturnsNull(): void
+    public function testNullCrossoriginPropertyReturnsAsNull(): void
     {
         $arr = array();
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
@@ -92,7 +93,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testCrossOriginReturnsAnonymous(): void
+    public function testAnonymousCrossoriginPropertyReturnsAsAnonymous(): void
     {
         $arr = array();
         $arr['crossorigin'] = 'anonymous';
@@ -107,7 +108,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testCrossOriginReturnsUseCredentials(): void
+    public function testUseCredentialsCrossoriginPropertyReturnsAsUseCredentials(): void
     {
         $arr = array();
         $arr['crossorigin'] = 'use-credentials';
@@ -122,7 +123,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testCrossOriginCaseSensitive(): void
+    public function testCrossoriginPropertyNotCaseSensitive(): void
     {
         $arr = array();
         $arr['crossorigin'] = 'Use-Credentials';
@@ -137,7 +138,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testCrossOriginTrimsWhitespace(): void
+    public function testCrossoriginPropertyWithWhitespaceReturnsAsTrimmed(): void
     {
         $arr = array();
         $arr['crossorigin'] = '    Use-Credentials  ';
@@ -152,7 +153,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testCrossInvalid(): void
+    public function testInvalidCrossoriginPropertyThrowsException(): void
     {
         $arr = array();
         $arr['crossorigin'] = 'invalid';
@@ -169,7 +170,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testValidatesFromHexHash(): void
+    public function testFileValidatesFromHexChecksumProperty(): void
     {
         $testchecksum = '2328c729efad8ac17f711a4249d7deb909ecaa05ed116ee7a36e8b6ffee63dc0';
         $arr = array();
@@ -185,7 +186,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testBadHexHashFails(): void
+    public function testFileFailsValidationWithIncorrectHexChecksumProperty(): void
     {
         $testchecksum = '2328c729efad8ac17f711a4249d7deb909ecaa05ed116ee7a36e8b6ffee63dc0';
         $arr = array();
@@ -201,7 +202,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testValidatesFromBase64Hash(): void
+    public function testFileValidatesFromBase64ChecksumProperty(): void
     {
         $testchecksum = '2328c729efad8ac17f711a4249d7deb909ecaa05ed116ee7a36e8b6ffee63dc0';
         $raw = hex2bin($testchecksum);
@@ -219,7 +220,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testBadBase64HashFails(): void
+    public function testFileFailsValidationWithIncorrectBase64ChecksumProperty(): void
     {
         $testchecksum = '2328c729efad8ac17f711a4249d7deb909ecaa05ed116ee7a36e8b6ffee63dc0';
         $shuffled = str_shuffle($testchecksum);
@@ -238,7 +239,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testValidateReturnsNullWhenFileNotePresent(): void
+    public function testFileValidationReturnsNullWhenFileNotPresent(): void
     {
         $testchecksum = '2328c729efad8ac17f711a4249d7deb909ecaa05ed116ee7a36e8b6ffee63dc0';
         $arr = array();
@@ -254,7 +255,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testValidateReturnsNullWhenAlgoNotValid(): void
+    public function testFileValidationReturnsNullWhenDigestAlgorithmNotValid(): void
     {
         $testchecksum = '2328c729efad8ac17f711a4249d7deb909ecaa05ed116ee7a36e8b6ffee63dc0';
         $arr = array();
@@ -272,7 +273,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testBuilsSrcFromAllComponents(): void
+    public function testGeneratesSrcAttributeFromAllProperties(): void
     {
         $expected = 'https://www.example.org/path/to/file.php?foo=bar&bar=foo';
         $parsed = parse_url($expected);
@@ -291,7 +292,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testBuilsSrcNoScheme(): void
+    public function testGeneratesLocaleSrcAttributeWhenUrlSchemeAttributeNull(): void
     {
         $expected = 'https://www.example.org/path/to/file.php?foo=bar&bar=foo';
         $parsed = parse_url($expected);
@@ -311,7 +312,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testBuilsSrcNoHost(): void
+    public function testGeneratesLocaleSrcAttributeWhenUrlHostAttributeNull(): void
     {
         $expected = 'https://www.example.org/path/to/file.php?foo=bar&bar=foo';
         $parsed = parse_url($expected);
@@ -331,7 +332,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testNullSrcWithHttpNoChecksum(): void
+    public function testWillNotGenerateSrcAttributeForHttpWithNullChecksumProperty(): void
     {
         $expected = 'http://www.example.org/path/to/file.php?foo=bar&bar=foo';
         $parsed = parse_url($expected);
@@ -351,7 +352,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testNullSrcWithHttpValidAlgoChecksum(): void
+    public function testWillGenerateSrcAttributeForHttpWithSha256ChecksumProperty(): void
     {
         $expected = 'http://www.example.org/path/to/file.php?foo=bar&bar=foo';
         $parsed = parse_url($expected);
@@ -372,7 +373,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testNullSrcWithHttpInvalidAlgoChecksum(): void
+    public function testWillNotGenerateSrcAttributeForHttpWithChecksumPropertyThatCanNotBeUsedForIntegrityAttribute(): void
     {
         $expected = 'http://www.example.org/path/to/file.php?foo=bar&bar=foo';
         $parsed = parse_url($expected);
@@ -393,7 +394,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testNullSrcWithSftp(): void
+    public function testWillNotGenerateSrcAttributeForUrlschemeNotNullOrHttpsOrHttp(): void
     {
         $expected = 'sftp://www.example.org/path/to/archive.tar.bz2';
         $parsed = parse_url($expected);
@@ -411,7 +412,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testSrcWithLocalPath(): void
+    public function testGeneratesSrcAttributeForLocalHosted(): void
     {
         $arr = array();
         $arr['urlpath']   = '/path/to/image.jpg';
@@ -426,7 +427,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testSrcWithLocalPathAndValidPrefix(): void
+    public function testGeneratesSrcAttributeForLocalHostedWithValidPathPrefix(): void
     {
         $prefix = '/some/prefix';
         $arr = array();
@@ -442,7 +443,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testSrcWithLocalPathBadPrefixNoLeadingForwardSlash(): void
+    public function testWillNotGenerateSrcAttributeForLocalHostedWithInvalidPathPrefixThatHasNoLeadingForwardSlash(): void
     {
         $prefix = 'some/prefix';
         $arr = array();
@@ -459,7 +460,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testSrcWithLocalPathBadPrefixContainsSpace(): void
+    public function testWillNotGenerateSrcAttributeForLocalHostedWithInvalidPathPrefixThatContainsSpaceCharacter(): void
     {
         $prefix = '/some prefix';
         $arr = array();
@@ -478,7 +479,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testValidatesRipemd160FromHexHash(): void
+    public function testValidatesFileWithRipemd160HexChecksum(): void
     {
         $testchecksum = 'c9483f0d7a0f560d09de5663e14799804c6c2db0';
         $arr = array();
@@ -492,9 +493,9 @@ final class GenericFileResourceTest extends TestCase
     /**
      * Make sure we can generate an integrity attribute from sha256
      *
-     * @return null
+     * @return void
      */
-    public function testValidIntegrityFromSHA256(): void
+    public function testGenerateValidIntegrityAttributeFromChecksumPropertyUsingSha256(): void
     {
         $testchecksum = '2328c729efad8ac17f711a4249d7deb909ecaa05ed116ee7a36e8b6ffee63dc0';
         $arr = array();
@@ -510,9 +511,9 @@ final class GenericFileResourceTest extends TestCase
     /**
      * Make sure we can generate an integrity attribute from sha356
      *
-     * @return null
+     * @return void
      */
-    public function testValidIntegrityFromSHA384(): void
+    public function testGenerateValidIntegrityAttributeFromChecksumPropertyUsingSha384(): void
     {
         $testchecksum = '35cc0eed0355362c016dbf133c55441e9c8bd378b30e46f2d8da4084a7b82ec8add38790101764caf8862a2927cfb362';
         $arr = array();
@@ -528,9 +529,9 @@ final class GenericFileResourceTest extends TestCase
     /**
      * Make sure we can generate an integrity attribute from sha512
      *
-     * @return null
+     * @return void
      */
-    public function testValidIntegrityFromSHA512(): void
+    public function testGenerateValidIntegrityAttributeFromChecksumPropertyUsingSha512(): void
     {
         $testchecksum = '53b9baaefebcfa5f02b59aa0405df418565b1992860947e7e2f4df2eeb9de404122be374c2345d889992347cc241aa2b875a07d0367ffc0064d9116ca211868e';
         $arr = array();
@@ -546,9 +547,9 @@ final class GenericFileResourceTest extends TestCase
     /**
      * Make sure we do NOT generate an integrity attribute from ripemd160
      *
-     * @return null
+     * @return void
      */
-    public function testIntegrityNullRipemd160(): void
+    public function testDoesNotGenerateIntegrityAttributeFromChecksumPropertyUsingRipemd160(): void
     {
         $testchecksum = 'c9483f0d7a0f560d09de5663e14799804c6c2db0';
         $arr = array();
@@ -565,7 +566,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testUnixTimestampFromISO8601(): void
+    public function testGenerateUnixTimestampFromIso8601String(): void
     {
         $arr = array();
         $arr['lastmod'] = '2018-03-14T11:51:00Z';
@@ -580,7 +581,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testUnixTimestampFromAbsoluteDateString(): void
+    public function testGenerateUnixTimestampFromNonIso8601AbsoluteDateString(): void
     {
         $arr = array();
         $arr['lastmod'] = 'Wed Mar 14 05:08:33 PDT 2018';
@@ -595,7 +596,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testUnixTimestampFromRelativeDateString(): void
+    public function testDoesNoteGenerateUnixTimestampFromRelativeDateString(): void
     {
         $arr = array();
         $arr['lastmod'] = '+1 week';
