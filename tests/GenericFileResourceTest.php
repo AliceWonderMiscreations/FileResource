@@ -596,7 +596,7 @@ final class GenericFileResourceTest extends TestCase
      *
      * @return void
      */
-    public function testDoesNoteGenerateUnixTimestampFromRelativeDateString(): void
+    public function testDoesNotGenerateUnixTimestampFromRelativeDateString(): void
     {
         $arr = array();
         $arr['lastmod'] = '+1 week';

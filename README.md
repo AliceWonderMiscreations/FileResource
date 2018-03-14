@@ -13,7 +13,7 @@ parameters fed to those methods.
 This package also includes an abstract class for using PHP to serve the
 resource described by a FileResource object.
 
-* [Install](#install-package)
+* [Install Package](#install-package)
 * [Class Properties](#class-properties)
 * [Class Methods](#class-methods)
 * [FileWrapper Class](#filewrapper-class)

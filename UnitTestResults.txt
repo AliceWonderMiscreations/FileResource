@@ -32,5 +32,5 @@ GenericFileResource
  [x] Does not generate integrity attribute from checksum property using ripemd 160
  [x] Generate unix timestamp from iso 8601 string
  [x] Generate unix timestamp from non iso 8601 absolute date string
- [x] Does note generate unix timestamp from relative date string
+ [x] Does not generate unix timestamp from relative date string
 
