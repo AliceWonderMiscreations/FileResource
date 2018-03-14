@@ -56,13 +56,13 @@ final class GenericFileResource extends FileResource
             $this->urlscheme = $params['urlscheme'];
         }
         if (isset($params['urlhost'])) {
-            $this->urlscheme = $params['urlhost'];
+            $this->urlhost = $params['urlhost'];
         }
         if (isset($params['urlpath'])) {
-            $this->urlscheme = $params['urlpath'];
+            $this->urlpath = $params['urlpath'];
         }
         if (isset($params['urlquery'])) {
-            $this->urlscheme = $params['urlquery'];
+            $this->urlquery = $params['urlquery'];
         }
     }
 //end of class

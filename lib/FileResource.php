@@ -48,6 +48,8 @@ abstract class FileResource
     /**
      * Hashing algorithms that are currently supported by browsers for use with
      * the integrity attribute
+     *
+     * @var array
      */
     protected $validIntegrityAlgo = array('sha256', 'sha384', 'sha512');
 
@@ -64,6 +66,13 @@ abstract class FileResource
      * @var null|string
      */
     protected $crossorigin = null;
+    
+    /**
+     * Current valid crossorigin arguments
+     *
+     * @var array
+     */
+    protected $validCrossOrigin = array('anonymous', 'use-credentials');
 
     /**
      * Modification date of file - may not necessarily match the modification date of the actual
@@ -191,7 +200,19 @@ abstract class FileResource
      */
     public function getCrossOrigin()
     {
-        return $this->crossorigin;
+        if (! is_string($this->crossorigin)) {
+            return null;
+        }
+        $crossorigin = trim(strtolower($this->crossorigin));
+        if (! in_array($crossorigin, $this->validCrossOrigin)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '"%s" is not a valid crossorigin attribute',
+                    $crossorigin
+                )
+            );
+        }
+        return $crossorigin;
     }
     
     /**
@@ -255,11 +276,12 @@ abstract class FileResource
         }
         $return = '';
         if ((! is_null($this->urlscheme)) && (! is_null($this->urlhost))) {
-            if (! in_array($this->urlscheme, array('http', 'https'))) {
+            $scheme = strtolower($this->urlscheme);
+            if (! in_array($scheme, array('http', 'https'))) {
                 trigger_error("Remote resources should only be served with HTTPS or (deprecated) HTTP with an integrity attribute, src attribute not generated.", E_USER_NOTICE);
                 return null;
             }
-            if ($this->urlscheme === 'http') {
+            if ($scheme === 'http') {
                 if (is_null($this->checksum)) {
                     trigger_error("Remote resources are not safe over HTTP without a usable integrity attribute, src attribute not generated.", E_USER_NOTICE);
                     return null;
@@ -271,7 +293,7 @@ abstract class FileResource
                 }
                 trigger_error("Use of HTTP for remote resources is dangerous and deprecated and may not be supported in future versions.", E_USER_NOTICE);
             }
-            $return = $this->urlscheme . '://' . $this->urlhost;
+            $return = $scheme . '://' . $this->urlhost;
         }
         if (! is_null($this->urlpath)) {
             $return = $return . $prefix . $this->urlpath;
@@ -313,11 +335,6 @@ abstract class FileResource
      */
     public function getTimestamp()
     {
-        /* Unit Test:
-         *  Test with ISO 8601 strings
-         *  Test with non-ISO 8601 strings
-         *  Test with relative strings (should return null)
-         */
         return $this->stringToTimestamp($this->lastmod);
     }
 // end of abstract class
