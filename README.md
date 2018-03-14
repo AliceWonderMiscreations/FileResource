@@ -3,8 +3,6 @@ FileResource Abstract Class
 An abstract class for resources embedded in a web page (images, scripts,
 whatever)
 
-__WARNING__: Developer Release, may have serious flaws.
-
 This package is intended to provide a standard means by which web applications
 can treat resources embedded in the web page as objects.
 
@@ -15,6 +13,18 @@ parameters fed to those methods.
 This package also includes an abstract class for using PHP to serve the
 resource described by a FileResource object.
 
+* [Install](#install-package)
+* [Class Properties](#class-properties)
+* [Class Methods](#class-methods)
+* [FileWrapper Class](#filewrapper-class)
+* [ResourceServer Class](#resourceserver-class)
+* [GenericFileResource Class](#genericfileresource-class)
+* [Unit Testing](#unit-testing)
+
+Install Package
+---------------
+
+You can install this class with `composer require awonderphp/fileresource:^1.0`
 
 Class Properties
 ----------------
@@ -42,6 +52,9 @@ The following properties are defined by the abstract class:
 * `protected $crossorigin = null;`  
   The contents of the `crossorigin` attribute that should be used when creating
   an (X)HTML node that references the resource.
+
+* `$validCrossOrigin = array('anonymous', 'use-credentials');`  
+  The valid options that can be used with a `crossorigin` attribute.
 
 * `protected $lastmod = null;`  
   The last time the file was modified, using ISO 8601 in `Y-m-d\TH:i:sO`, which
@@ -136,8 +149,8 @@ The following methods are defined by the abstract class:
 
 
 
-AWonderPHP\FileResource\FileWrapper
-================================
+FileWrapper Class
+=================
 
 This is a class that extends my `\AWonderPHP\FileWrapper\FileWrapper` class.
 The class it extends was written to be a download wrapper including support
@@ -152,8 +165,8 @@ independent of the file on the filesystem.
 
 
 
-AWonderPHP\FileResource\ResourceServer
-===================================
+ResourceServer Class
+====================
 
 This is an abstract class that provides a public method for serving a file
 based from a `FileResource` object.
@@ -162,7 +175,8 @@ The idea is to extend the class adding a method construct the necessary
 `FileResource` object and then serve it.
 
 
-AWonderPHP\FileResource\GenericFileResource
+GenericFileResource Class
+=========================
 
 This is a very generic class that extends the `FileResource` abstract class. It
 exists to provide for easy unit testing of the public methods in the abstract
@@ -175,7 +189,8 @@ pairs where the `key` corresponds to the FileResource property you wish to set.
 Unit Testing
 ============
 
-Unit Testing is performed using [PHPUnit](https://phpunit.de/) version 7.
+Unit Testing is performed using [PHPUnit](https://phpunit.de/) version 7. The
+results can be viewed in the file [UnitTestResults.txt](UnitTestResults.txt)
 
 -----------------------------------
 __EOF__
