@@ -102,16 +102,6 @@ abstract class FileResource
      * @var null|string
      */
     protected $urlquery = null;
-  
-    /**
-     * Return the mime type
-     *
-     * @return null|string
-     */
-    public function getMimeType()
-    {
-        return $this->mime;
-    }
     
     /**
      * Tests whether or not a specified $prefix is valid. Classes that extend may wish to
@@ -170,6 +160,19 @@ abstract class FileResource
         }
         return null;
     }
+    
+    /**
+     * Return the mime type
+     *
+     * @return null|string
+     */
+    public function getMimeType()
+    {
+        if (is_null($this->mime)) {
+            return null;
+        }
+        return trim(strtolower($this->mime));
+    }
 
     /**
      * Return the checksum
@@ -212,12 +215,6 @@ abstract class FileResource
      */
     public function validateFile()
     {
-        /* Unit Test:
-         *  Test with known good and bad hex (should return true, false respectively)
-         *  Test with known good and bad base64 (should return true, false respectively)
-         *  Test with file not present (should return null)
-         *  Test with algo not in hash_algos() (should return null)
-         */
         if ((is_null($this->filepath)) || (is_null($this->checksum))) {
             return null;
         }
@@ -250,15 +247,6 @@ abstract class FileResource
      */
     public function getSrcAttribute($prefix = null)
     {
-        /* Unit Test:
-         *  Test with various different $prefix
-         *  Test with scheme w/o hostname
-         *  Test with hostname w/o scheme
-         *  Test with scheme that is not http or https
-         *  Test with http w/ null checksum
-         *  Test with http w/ checksum algo not in $validIntegrityAlgo
-         *  Test with urlquery that includes &
-         */
         if (! $this->validatePrefix($prefix)) {
             return null;
         }
@@ -289,7 +277,7 @@ abstract class FileResource
             $return = $return . $prefix . $this->urlpath;
         }
         if (! is_null($this->urlquery)) {
-            $return = $return '?' . $this->urlquery;
+            $return = $return . '?' . $this->urlquery;
         }
         if (strlen($return) === 0) {
             return null;
@@ -304,12 +292,6 @@ abstract class FileResource
      */
     public function getIntegrityAttribute()
     {
-        /* Unit Test:
-         *  Test with all algorithms in $validIntegrityAlgo
-         *   ensuring hex is properly translated to base64
-         *  Test with algorithm NOT in $validIntegrityAlgo
-         *
-         */
         if (is_null($this->checksum)) {
             return null;
         }
