@@ -161,5 +161,16 @@ based from a `FileResource` object.
 The idea is to extend the class adding a method construct the necessary
 `FileResource` object and then serve it.
 
+
+AWonderPHP\FileResource\GenericFileResource
+
+This is a very generic class that extends the `FileResource` abstract class. It
+exists to provide for easy unit testing of the public methods in the abstract
+class but it can be used in web applications.
+
+The `__construct` function takes a single argument, an array of `key => value`
+pairs where the `key` corresponds to the FileResource property you wish to set.
+
+
 -----------------------------------
 __EOF__
