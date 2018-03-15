@@ -33,7 +33,7 @@ final class GenericFileResource extends FileResource
      * Populated the class properties from an array of parameters
      *
      * @param array $params A key=>value array of properties to assign to the standard
-     *                      FileResource class properties
+     *                      FileResource class properties.
      */
     public function __construct(array $params)
     {
@@ -64,8 +64,7 @@ final class GenericFileResource extends FileResource
         if (isset($params['urlquery'])) {
             $this->urlquery = $params['urlquery'];
         }
-    }
-//end of class
-}
+    }//end __construct()
+}//end class
 
 ?>

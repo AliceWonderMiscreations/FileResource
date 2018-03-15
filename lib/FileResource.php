@@ -116,9 +116,9 @@ abstract class FileResource
      * Tests whether or not a specified $prefix is valid. Classes that extend may wish to
      * throw an exception on failure.
      *
-     * @param null|string $prefix The prefix to test
+     * @param null|string $prefix The prefix to test.
      *
-     * @return bool True on valid, False on invalid
+     * @return bool True on valid, False on invalid.
      */
     protected function validatePrefix($prefix)
     {
@@ -135,15 +135,16 @@ abstract class FileResource
             return false;
         }
         return true;
-    }
+    }//end validatePrefix()
+
     
     /**
      * Converts a string to a UNIX timestamp returning null on failure
      * or if string is a relative time string (e.g. +1 week)
      *
-     * @param null|string $dateString The date string to be converted
+     * @param null|string $dateString The date string to be converted.
      *
-     * @return null|int The UNIX seconds from epoch
+     * @return null|int The UNIX seconds from epoch.
      */
     protected function stringToTimestamp($dateString)
     {
@@ -168,7 +169,8 @@ abstract class FileResource
             return $return;
         }
         return null;
-    }
+    }//end stringToTimestamp()
+
     
     /**
      * Return the mime type
@@ -181,7 +183,8 @@ abstract class FileResource
             return null;
         }
         return trim(strtolower($this->mime));
-    }
+    }//end getMimeType()
+
 
     /**
      * Return the checksum
@@ -191,7 +194,8 @@ abstract class FileResource
     public function getChecksum()
     {
         return $this->checksum;
-    }
+    }//end getChecksum()
+
     
     /**
      * Returns null or the value to use with a crossorigin attribute
@@ -213,7 +217,8 @@ abstract class FileResource
             );
         }
         return $crossorigin;
-    }
+    }//end getCrossOrigin()
+
     
     /**
      * Returns the filepath to the resource or null if the property is not defined
@@ -223,7 +228,8 @@ abstract class FileResource
     public function getFilePath()
     {
         return $this->filepath;
-    }
+    }//end getFilePath()
+
     
     /**
      * Validates the file matches the checksum
@@ -256,13 +262,14 @@ abstract class FileResource
             return true;
         }
         return false;
-    }
+    }//end validateFile()
+
 
     /**
      * Returns the URI to the resource. For http the checksum MUST exist so
      * that an integrity attribute will exist.
      *
-     * @param null|string $prefix A path to put at the beginning of the object urlpath property
+     * @param null|string $prefix A path to put at the beginning of the object urlpath property.
      *
      * @return null|string
      */
@@ -305,7 +312,8 @@ abstract class FileResource
             return null;
         }
         return $return;
-    }
+    }//end getSrcAttribute()
+
     
     /**
      * Returns null or the value to use with a script node integrity attribute
@@ -326,7 +334,8 @@ abstract class FileResource
             $checksum = base64_encode($checksum);
         }
         return $algo . '-' . $checksum;
-    }
+    }//end getIntegrityAttribute()
+
 
     /**
      * Returns the UNIX timestamp from the lastmod property
@@ -336,8 +345,7 @@ abstract class FileResource
     public function getTimestamp()
     {
         return $this->stringToTimestamp($this->lastmod);
-    }
-// end of abstract class
-}
+    }//end getTimestamp()
+}//end class
 
 ?>

@@ -50,16 +50,17 @@ class FileWrapper extends \AWonderPHP\FileWrapper\FileWrapper
                 $this->etag = sprintf("%s-%s-%x-%s", $arr[0], $arr[1], $arr[2], $arr[3]);
             }
         }
-    }
+    }//end fixEtag()
+
   
     /**
      * Constructor function
      *
-     * @param string      $filepath The path on the filesystem to the file being served
-     * @param null|string $mime     The mime type to use
-     * @param null|int    $ts       The unix timestamp to use when serving as mod date
-     * @param null|string $origin   The allow-origin header to send
-     * @param int         $maxage   How long the client should cache the file for, in seconds
+     * @param string      $filepath The path on the filesystem to the file being served.
+     * @param null|string $mime     The mime type to use.
+     * @param null|int    $ts       The unix timestamp to use when serving as mod date.
+     * @param null|string $origin   The allow-origin header to send.
+     * @param int         $maxage   How long the client should cache the file for, in seconds.
      *
      * @return void
      */
@@ -74,8 +75,7 @@ class FileWrapper extends \AWonderPHP\FileWrapper\FileWrapper
             $this->allowOrigin = $origin;
         }
         $this->fixEtag();
-    }
-// end of class
-}
+    }//end __construct()
+}//end class
 
 ?>

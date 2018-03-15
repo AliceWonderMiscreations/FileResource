@@ -41,7 +41,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->getMimeType();
         $this->assertNull($b);
-    }
+    }//end testNullMimePropertyReturnsAsNull()
+
 
     /**
      * Make sure that getMimeType returns lower case when property is set to upper case
@@ -56,7 +57,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 'text/plain';
         $actual = $a->getMimeType();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testUpperCaseMimePropertyReturnsAsLowerCase()
+
 
     /**
      * Make sure white space at beginning or end of mime property gets trimmed
@@ -71,7 +73,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 'text/plain';
         $actual = $a->getMimeType();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testMimePropertyWithWhitespaceReturnsAsTrimmed()
+
 
     // crossorigin validation tests
 
@@ -86,7 +89,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->getCrossOrigin();
         $this->assertNull($b);
-    }
+    }//end testNullCrossoriginPropertyReturnsAsNull()
+
 
     /**
      * Make sure that getCrossOrigin returns anonymous when property is set to anonymous
@@ -101,7 +105,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 'anonymous';
         $actual = $a->getCrossOrigin();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testAnonymousCrossoriginPropertyReturnsAsAnonymous()
+
 
     /**
      * Make sure that getCrossOrigin returns use-credentials when property is set to use-credentials
@@ -116,7 +121,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 'use-credentials';
         $actual = $a->getCrossOrigin();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testUseCredentialsCrossoriginPropertyReturnsAsUseCredentials()
+
 
     /**
      * Make sure that getCrossOrigin is not case sensitive
@@ -131,7 +137,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 'use-credentials';
         $actual = $a->getCrossOrigin();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testCrossoriginPropertyNotCaseSensitive()
+
 
     /**
      * Make sure that getCrossOrigin trims white-space
@@ -146,7 +153,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 'use-credentials';
         $actual = $a->getCrossOrigin();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testCrossoriginPropertyWithWhitespaceReturnsAsTrimmed()
+
 
     /**
      * Make sure that getCrossOrigin throws invalid argument when argument not valid
@@ -161,7 +169,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 'use-credentials';
         $this->expectException(\InvalidArgumentException::class);
         $actual = $a->getCrossOrigin();
-    }
+    }//end testInvalidCrossoriginPropertyThrowsException()
+
 
     // checksum validation tests
 
@@ -179,7 +188,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->validateFile();
         $this->assertTrue($b);
-    }
+    }//end testFileValidatesFromHexChecksumProperty()
+
 
     /**
      * Make sure validateFile() fails with an invalid hex hash
@@ -195,7 +205,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->validateFile();
         $this->assertFalse($b);
-    }
+    }//end testFileFailsValidationWithIncorrectHexChecksumProperty()
+
 
     /**
      * Make sure validateFile() passes with a valid base64 hash
@@ -213,7 +224,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->validateFile();
         $this->assertTrue($b);
-    }
+    }//end testFileValidatesFromBase64ChecksumProperty()
+
 
     /**
      * Make sure validateFile() fails with an invalid base64 hash
@@ -232,7 +244,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->validateFile();
         $this->assertFalse($b);
-    }
+    }//end testFileFailsValidationWithIncorrectBase64ChecksumProperty()
+
 
     /**
      * Make sure validateFile() return null if the file can not be found
@@ -248,7 +261,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->validateFile();
         $this->assertNull($b);
-    }
+    }//end testFileValidationReturnsNullWhenFileNotPresent()
+
 
     /**
      * Make sure validateFile() return null if the specified algorithm is not valid
@@ -264,7 +278,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->validateFile();
         $this->assertNull($b);
-    }
+    }//end testFileValidationReturnsNullWhenDigestAlgorithmNotValid()
+
 
     // src attribute tests
 
@@ -285,7 +300,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getSrcAttribute();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGeneratesSrcAttributeFromAllProperties()
+
 
     /**
      * Make sure we only build local url when scheme missing
@@ -305,7 +321,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getSrcAttribute();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGeneratesLocaleSrcAttributeWhenUrlSchemeAttributeNull()
+
 
     /**
      * Make sure we only build local url when host missing
@@ -325,7 +342,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getSrcAttribute();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGeneratesLocaleSrcAttributeWhenUrlHostAttributeNull()
+
 
     /**
      * Make sure we refuse to build src if scheme is http w/o checksum
@@ -345,7 +363,8 @@ final class GenericFileResourceTest extends TestCase
         $actual = @$a->getSrcAttribute();
         //$this->assertEquals($expected, $actual);
         $this->assertNull($actual);
-    }
+    }//end testWillNotGenerateSrcAttributeForHttpWithNullChecksumProperty()
+
 
     /**
      * Make sure we do build src if scheme is http w/ sha256
@@ -366,7 +385,8 @@ final class GenericFileResourceTest extends TestCase
         $actual = @$a->getSrcAttribute();
         $this->assertEquals($expected, $actual);
         //$this->assertNull($actual);
-    }
+    }//end testWillGenerateSrcAttributeForHttpWithSha256ChecksumProperty()
+
 
     /**
      * Make sure we do not build src if scheme is http w/ ripemd160
@@ -387,7 +407,8 @@ final class GenericFileResourceTest extends TestCase
         $actual = @$a->getSrcAttribute();
         //$this->assertEquals($expected, $actual);
         $this->assertNull($actual);
-    }
+    }//end testWillNotGenerateSrcAttributeForHttpWithChecksumPropertyThatCanNotBeUsedForIntegrityAttribute()
+
 
     /**
      * Make sure we do not build src if scheme is not null,http,https
@@ -405,7 +426,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = @$a->getSrcAttribute();
         $this->assertNull($actual);
-    }
+    }//end testWillNotGenerateSrcAttributeForUrlschemeNotNullOrHttpsOrHttp()
+
 
     /**
      * Make sure we can build a local path
@@ -420,7 +442,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getSrcAttribute();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGeneratesSrcAttributeForLocalHosted()
+
 
     /**
      * Make sure we can build a local path and a valid prefix
@@ -436,7 +459,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getSrcAttribute($prefix);
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGeneratesSrcAttributeForLocalHostedWithValidPathPrefix()
+
 
     /**
      * Make sure prefix without leading slash invalidates
@@ -453,7 +477,8 @@ final class GenericFileResourceTest extends TestCase
         $actual = $a->getSrcAttribute($prefix);
         //$this->assertEquals($expected, $actual);
         $this->assertNull($actual);
-    }
+    }//end testWillNotGenerateSrcAttributeForLocalHostedWithInvalidPathPrefixThatHasNoLeadingForwardSlash()
+
 
     /**
      * Make sure prefix without illegal characters invalidates
@@ -470,7 +495,8 @@ final class GenericFileResourceTest extends TestCase
         $actual = $a->getSrcAttribute($prefix);
         //$this->assertEquals($expected, $actual);
         $this->assertNull($actual);
-    }
+    }//end testWillNotGenerateSrcAttributeForLocalHostedWithInvalidPathPrefixThatContainsSpaceCharacter()
+
 
     // integrity attribute tests
 
@@ -488,7 +514,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->validateFile();
         $this->assertTrue($b);
-    }
+    }//end testValidatesFileWithRipemd160HexChecksum()
+
 
     /**
      * Make sure we can generate an integrity attribute from sha256
@@ -506,7 +533,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getIntegrityAttribute();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGenerateValidIntegrityAttributeFromChecksumPropertyUsingSha256()
+
 
     /**
      * Make sure we can generate an integrity attribute from sha356
@@ -524,7 +552,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getIntegrityAttribute();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGenerateValidIntegrityAttributeFromChecksumPropertyUsingSha384()
+
 
     /**
      * Make sure we can generate an integrity attribute from sha512
@@ -542,7 +571,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $actual = $a->getIntegrityAttribute();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGenerateValidIntegrityAttributeFromChecksumPropertyUsingSha512()
+
 
     /**
      * Make sure we do NOT generate an integrity attribute from ripemd160
@@ -557,7 +587,8 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->getIntegrityAttribute();
         $this->assertNull($b);
-    }
+    }//end testDoesNotGenerateIntegrityAttributeFromChecksumPropertyUsingRipemd160()
+
 
     //timestamp tests
 
@@ -574,7 +605,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 1521028260;
         $actual = $a->getTimestamp();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGenerateUnixTimestampFromIso8601String()
+
 
     /**
      * Make sure we produce a valid UNIX timestamp from non ISO 8601 string that strtotime() can parse
@@ -589,7 +621,8 @@ final class GenericFileResourceTest extends TestCase
         $expected = 1521029313;
         $actual = $a->getTimestamp();
         $this->assertEquals($expected, $actual);
-    }
+    }//end testGenerateUnixTimestampFromNonIso8601AbsoluteDateString()
+
 
     /**
      * Make sure a relative date string produces null
@@ -603,7 +636,7 @@ final class GenericFileResourceTest extends TestCase
         $a = new \AWonderPHP\FileResource\GenericFileResource($arr);
         $b = $a->getTimestamp();
         $this->assertNull($b);
-    }
-}
+    }//end testDoesNotGenerateUnixTimestampFromRelativeDateString()
+}//end class
 
 ?>
